@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="./image/main/tag.png">
+    <title>人物详情</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(180deg, #8B0000 0%, #A52A2A 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .main-content {
+            display: flex;
+            flex: 2;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-right: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .left-content {
+            flex: 3;
+            padding-right: 20px;
+        }
+        
+        .right-content {
+            flex: 2;
+            padding-left: 20px;
+            border-left: 1px solid #eee;
+        }
+        
+        .sidebar {
+            flex: 0.8;
+            background-color: #ffc0cb;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-right: 20px;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        h2 {
+            color: #555;
+            margin: 15px 0 10px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        p {
+            line-height: 1.6;
+            margin-bottom: 10px;
+            color: #444;
+        }
+        
+        .profile {
+            display: flex;
+            margin: 20px 0;
+            justify-content: center;
+        }
+        
+        .profile-img {
+            width: 150px;
+            height: 180px;
+            margin-right: 20px;
+        }
+        
+        .profile-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .profile-info {
+            flex: 1;
+        }
+        
+        .profile-info p {
+            margin-bottom: 5px;
+        }
+        
+        .sidebar h3 {
+            margin: 15px 0 10px;
+            color: #333;
+        }
+        
+        .sidebar ul {
+            list-style-type: none;
+        }
+        
+        .sidebar li {
+            margin-bottom: 5px;
+            position: relative;
+            padding-left: 15px;
+        }
+        
+        .sidebar li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #333;
+        }
+        
+        .sidebar a {
+            color: #444;
+            text-decoration: none;
+        }
+        
+        .sidebar .section {
+            margin-bottom: 20px;
+        }
+        
+        .birth-info {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h2>详细史料</h2>
+            <div id="sidebar-content"></div>
+        </div>
+        <div class="main-content">
+            <div class="left-content">
+                <h1 id="person-name"></h1>
+                <div class="profile-info" id="main-content"></div>
+            </div>
+            <div class="right-content">
+                <div class="profile">
+                    <div class="profile-img"><img id="person-image" src="" alt="人物照片"></div>
+                </div>
+                <div class="birth-info" id="attribute-info"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 从URL获取人物名称参数
+        function getPersonNameFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('name') || '向警予'; // 默认显示向警予的信息
+        }
+
+        // 加载JSON数据
+        async function loadPersonData() {
+            try {
+                const response = await fetch('./json/details.json');
+                const data = await response.json();
+                const personName = getPersonNameFromUrl();
+                const person = data.find(p => p.name === personName);
+                if (person) {
+                    displayPersonData(person);
+                } else {
+                    console.error('未找到指定人物数据');
+                }
+            } catch (error) {
+                console.error('加载数据失败:', error);
+            }
+        }
+
+        // 显示人物数据
+        function displayPersonData(person) {
+            // 设置标题和图片
+            document.title = person.name;
+            document.getElementById('person-name').textContent = person.name;
+            document.getElementById('person-image').src = person.img;
+
+            // 显示主要内容
+            const mainContent = document.getElementById('main-content');
+            for (const [key, value] of Object.entries(person.main)) {
+                const content = document.createElement('div');
+                content.innerHTML = `<h2>${key}</h2><p>${value}</p>`;
+                mainContent.appendChild(content);
+            }
+
+            // 显示侧边栏
+            const sidebarContent = document.getElementById('sidebar-content');
+            let sectionIndex = 1;
+            for (const [key, value] of Object.entries(person.side)) {
+                if (value && value.length > 0) {
+                    const section = document.createElement('div');
+                    section.className = 'section';
+                    section.innerHTML = `
+                        <h3>${sectionIndex}.${key}</h3>
+                        <ul>
+                            ${value.map(item => `<li><a href="#">${item}</a></li>`).join('')}
+                        </ul>
+                    `;
+                    sidebarContent.appendChild(section);
+                } else {
+                    const section = document.createElement('div');
+                    section.className = 'section';
+                    section.innerHTML = `<h3>${sectionIndex}.${key}</h3>`;
+                    sidebarContent.appendChild(section);
+                }
+                sectionIndex++;
+            }
+
+            // 显示属性信息
+            const attributeInfo = document.getElementById('attribute-info');
+            for (const [key, value] of Object.entries(person.attribute)) {
+                const p = document.createElement('p');
+                p.style.marginBottom = '8px';
+                p.style.color = '#444';
+                p.innerHTML = `<strong>${key}：</strong>${value}`;
+                attributeInfo.appendChild(p);
+            }
+        }
+
+        // 页面加载完成后执行
+        window.addEventListener('load', loadPersonData);
+    </script>
+</body>
+</html>

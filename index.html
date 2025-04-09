@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>峥嵘芳华：红色女性历史资源的活化与利用</title>
+    <link rel="icon" type="image/png" href="./image/main/tag.png">
+    <script src="./js/echarts.js"></script>
+    <script src="./js/chain.js"></script>
+    <script src="./js/jquery-3.5.1.js"></script>
+    <!--link rel="stylesheet" href="HTML/css/bootstrap.min.css"-->
+    <style>
+        body {
+            background: linear-gradient(180deg, #8B0000 0%, #A52A2A 50%, #CD5C5C 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            min-height: 100vh;
+            width: 1700px;
+            position: relative;
+            overflow: visible;
+            margin: 0 auto;
+            padding-bottom: 50px;
+        }
+        tablethead,
+        tbodytr {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        /*表格文字属性；居中，字体宽度和字体大小*/
+        trth {
+            text-align: center;
+            font-weight: bold;
+            font-size: larger;
+        }
+
+        /*将表头缩进1.2em*/
+        tablethead {
+            width: calc(100% - 1.2em)
+        }
+
+        /*表头数据格式：颜色和文字居中*/
+        trtd {
+            color: #FFFFFF;
+            text-align: center;
+        }
+
+        /*表格设置滚动*/
+        tabletbody {
+            display: block;
+            height: 115px;
+            overflow-y: scroll;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" style="height: 800px; width: 1700px; position: relative; overflow: auto; margin: 0 auto;">
+        <!-- 标题 -->
+        <!--div style="text-align: center; margin: 20px 0;">
+            <div
+                style="display: inline-block; background-color: #8c3333; padding: 15px 40px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); border: 2px solid #d0a3a3;">
+                <div
+                    style="color: #fff; font-size: 48px; font-family: '楷体', KaiTi, sans-serif; text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4); letter-spacing: 2px;">
+                    峥嵘芳华：红色女性历史资源的活化与利用</div>
+            </div>
+        </div-->
+        <!-- 搜索框 -->
+        <div>
+            <img src="./image/main/processed.png" style="display: block; width: 300px; height: auto; margin: 0 auto 10px;padding-top: 40px;">
+            <div style="text-align: center; margin: 10px 0;">
+                <input type="text" placeholder="搜索历史人物"
+                    style="width: 500px; height: 40px; padding: 0 20px; border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-top-right-radius: 0; border-bottom-right-radius: 0; border:1px solid #d0a3a3; border-right: none; background-color: rgba(255, 255, 255, 0.9); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); font-size: 16px; color: #333; vertical-align: middle; outline: none;">
+                <button
+                    style="width: 100px; height: 40px; padding: 0 20px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-top-left-radius: 0; border-bottom-left-radius: 0; background-color: #d0a3a3; color: white; border: 1px solid #d0a3a3; border-left: none; font-size: 16px; cursor: pointer; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); transition: background-color 0.3s ease; vertical-align: middle; margin-left: -5px;"
+                    onmouseover="this.style.backgroundColor='#c08e8e'"
+                    onmouseout="this.style.backgroundColor='#d0a3a3'">搜索</button>
+            </div>
+        </div>
+
+        <!-- 左侧轮播图 -->
+        <div class="carousel-container" style="position: absolute; left: 150px; top: 120px;">
+            <div class="carousel" id="leftCarousel" style="position: relative; width: 100px; height: 600px; overflow: hidden;">
+                <div class="carousel-item" style="position: absolute; width: 100%; transition: transform 0.5s;">
+                    <div style="width: 100px; text-align: center; background-color: rgba(255, 255, 255, 0.9); padding: 0; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+                        <a href="detail.html?personId=1"><img src="./image/people/xjy.png" alt="向警予" style="width: 100px; height: 125px; border-radius:8px 8px 0 0; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);"></a>
+                        <div style="color: #333; font-size: 16px; font-weight: 500; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);">向警予</div>
+                    </div>
+                </div>
+                <div class="carousel-item" style="position: absolute; width: 100%; transform: translateY(100%); transition: transform 0.5s;">
+                    <div style="width: 100px; text-align: center; background-color: rgba(255, 255, 255, 0.9); padding: 0; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+                        <a href="detail.html?personId=2"><img src="./image/people/xjy.png" alt="蔡畅" style="width: 100px; height: 125px; border-radius:8px 8px 0 0; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);"></a>
+                        <div style="color: #333; font-size: 16px; font-weight: 500; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);">蔡畅</div>
+                    </div>
+                </div>
+                <div class="carousel-item" style="position: absolute; width: 100%; transform: translateY(200%); transition: transform 0.5s;">
+                    <div style="width: 100px; text-align: center; background-color: rgba(255, 255, 255, 0.9); padding: 0; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+                        <a href="detail.html?personId=3"><img src="./image/people/xjy.png" alt="邓颖超" style="width: 100px; height: 125px; border-radius:8px 8px 0 0; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);"></a>
+                        <div style="color: #333; font-size: 16px; font-weight: 500; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);">邓颖超</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 右侧轮播图 -->
+        <div class="carousel-container" style="position: absolute; right: 150px; top: 120px;">
+            <div class="carousel" id="rightCarousel" style="position: relative; width: 100px; height: 600px; overflow: hidden;">
+                <div class="carousel-item" style="position: absolute; width: 100%; transition: transform 0.5s;">
+                    <div style="width: 100px; text-align: center; background-color: rgba(255, 255, 255, 0.9); padding: 0; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+                        <a href="detail.html?personId=4"><img src="./image/people/xjy.png" alt="何香凝" style="width: 100px; height: 125px; border-radius:8px 8px 0 0; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);"></a>
+                        <div style="color: #333; font-size: 16px; font-weight: 500; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);">何香凝</div>
+                    </div>
+                </div>
+                <div class="carousel-item" style="position: absolute; width: 100%; transform: translateY(100%); transition: transform 0.5s;">
+                    <div style="width: 100px; text-align: center; background-color: rgba(255, 255, 255, 0.9); padding: 0; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+                        <a href="detail.html?personId=5"><img src="./image/people/xjy.png" alt="李坚真" style="width: 100px; height: 125px; border-radius:8px 8px 0 0; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);"></a>
+                        <div style="color: #333; font-size: 16px; font-weight: 500; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);">李坚真</div>
+                    </div>
+                </div>
+                <div class="carousel-item" style="position: absolute; width: 100%; transform: translateY(200%); transition: transform 0.5s;">
+                    <div style="width: 100px; text-align: center; background-color: rgba(255, 255, 255, 0.9); padding: 0; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+                        <a href="detail.html?personId=6"><img src="./image/people/xjy.png" alt="王会悟" style="width: 100px; height: 125px; border-radius:8px 8px 0 0; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);"></a>
+                        <div style="color: #333; font-size: 16px; font-weight: 500; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);">王会悟</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            function startCarousel(carouselId, interval) {
+                const carousel = document.getElementById(carouselId);
+                const items = carousel.getElementsByClassName('carousel-item');
+                let currentIndex = 0;
+
+                setInterval(() => {
+                    // 将当前项移动到顶部外
+                    items[currentIndex].style.transform = `translateY(-100%)`;
+                    items[currentIndex].style.transition = 'transform 0.5s';
+                    
+                    // 更新索引
+                    currentIndex = (currentIndex + 1) % items.length;
+                    
+                    // 重新排列其他项
+                    for(let i = 0; i < items.length; i++) {
+                        if(i === currentIndex) {
+                            // 当前项显示在顶部
+                            items[i].style.transform = 'translateY(0)';
+                            items[i].style.transition = 'transform 0.5s';
+                        } else if(i > currentIndex) {
+                            // 后面的项正常排列
+                            items[i].style.transform = `translateY(${(i-currentIndex)*100}%)`;
+                            items[i].style.transition = 'transform 0.5s';
+                        } else {
+                            // 将之前的项移到底部
+                            items[i].style.transform = `translateY(${(items.length-currentIndex+i)*100}%)`;
+                            items[i].style.transition = 'none';
+                            // 添加一个小延迟后重新启用过渡效果
+                            setTimeout(() => {
+                                items[i].style.transition = 'transform 0.5s';
+                            }, 50);
+                        }
+                    }
+                }, interval);
+            }
+
+            // 启动左右两个轮播图
+            startCarousel('leftCarousel', 3000);
+            startCarousel('rightCarousel', 3000);
+        </script>
+        <div id="content-left" class="col-md-9" style="display: flex; justify-content: center; margin: 0 auto; margin-bottom: 50px;">
+            <div id="main" style="width: 800px; height: 600px;"></div>
+        </div>
+    </div>
+</body>
+<script>
+    <!--    echarts初始化：获取myChart对象-->
+    var myChart = echarts.init(document.getElementById('main'));
+
+    $(function () {
+        //获取表格对象
+        let table = $("#tbody");
+        //发生ajax请求，到json文件，data为返回的数据，将数据封装到空数组中；直接拿来用即可
+        $.ajax({
+            url: "./json/RobotSales.json", //json文件位置，文件名
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                let res = []; //自定义一个空数组接收请求回来的json数据
+                for (let i = 0; i < data.length; i++) {
+                    res.push({
+                        name: data[i].name,
+                        value: data[i].value,
+                        sales: data[i].Sales //若json文件中自己定义了其他信息，在下边直接以k:v形式进行罗列即可
+                    });
+                }
+                //重点：将封装的json数据传递到dealWithData函数中进行渲染处理使用
+                dealWithData(res);
+                //===销售表格===
+                let row = [];
+                for (let i = 0; i < data.length; i++) {
+                    let name = data[i].name;
+                    let sales = data[i].Sales;
+                    let text = data[i].text;
+                    //拼接表格的行和列
+                    row.push("<tr><td>" + name + "</td>" +
+                        '<td>' + sales + '</td>' + text + '</tr>');
+                }
+                table.append(row.join()); //追加到table表格中
+            }
+        });
+    })
+
+    function dealWithData(data) {
+        let dataValue = data;
+        option = {
+            //鼠标划过省份下弹框
+            tooltip: {
+                show: true,
+                triggerOn: 'click'//点击生效
+            },
+            geo: {
+                map: 'china',//必须写
+                roam: false,// 拖拽功能；自选关闭开启
+                zoom: 1.2,//地图缩放比例
+                center: [105, 36],//地图位置
+                //地图省份的样式；包括板块颜色和边框颜色
+                itemStyle: {
+                    areaColor: '#FFE4E1',
+                    borderColor: "#d0a3a3",
+                },
+                //省份字体样式；包括是否展示，字体大小和颜色
+                label: {
+                    normal: {
+                        show: true,
+                        fontSize: "11.5",
+                        color: "rgb(107,102,102)"
+                    }
+                },
+                //鼠标划过的高亮设置；包括省份板块颜色和字体等
+                emphasis: {
+                    itemStyle: {
+                        areaColor: '#d0a3a3',
+                        scale: 1.5
+                    },
+                    label: {
+                        show: true,
+                        color: "rgb(255,255,255)"
+                    }
+                }
+            },
+
+            series: [
+                //我们的散点
+                {
+                    name: '销量',
+                    type: 'scatter',
+                    coordinateSystem: 'geo',//坐标系统
+                    data: dataValue,
+                    //地图点的样式；颜色，大小
+                    symbolSize: 12,
+                    itemStyle: {
+                        color: "#d0a3a3",
+                        shadowBlur: 2,
+                        shadowColor: "#333"
+                    },
+                    //鼠标点击散点的下弹框
+                    tooltip: {
+                        show: true,
+                        triggerOn: "click",
+                        formatter: function (data1) {
+                            let data2 = data1.data;
+                            return "<b>销量<b><br>" + data2.name + data2.sales
+                        }
+                    },
+                },
+
+                //涟漪特效
+                {
+                    name: "产品销量",
+                    type: "effectScatter",
+                    coordinateSystem: "geo",
+                    data: dataValue,//传入的地图点数据
+                    symbolSize: 6,//涟漪大小
+                    showEffectOn: "render",
+                    //涟漪效应
+                    rippleEffect: {
+                        brushType: "stroke",
+                        color: "#d0a3a3",
+                        period: 10,//周期
+                        scale: 10//规模
+                    },
+                    hoverAnimation: true,//悬停动画
+                    //地图点样式
+                    label: {
+                        formatter: "{b}",
+                        position: "top",
+                        show: true,
+                        fontSize: "10",
+                    },
+                    itemStyle: {
+                        color: "#d0a3a3",
+                        shadowBlur: 2,
+                        shadowColor: "#333"
+                    },
+                    //鼠标点击散点的下弹框
+                    tooltip: {
+                        show: true,
+                        triggerOn: "click",
+                        formatter: function (data1) {
+                            console.log(data1)
+                            let data2 = data1.data;
+                            return "<b>销量<b><br>" + data2.name + data2.sales
+                        }
+                    },
+                    zlevel: 1
+                }
+            ]
+        };
+        myChart.setOption(option);
+    }
+
+
+
+    //点击事件
+    myChart.on('click', function (param) {
+        let data = param.data;
+        console.log(param);
+        if (data) {
+            console.log("城市：" + data.name + ";坐标：" + data.value + ";销量：" + data.sales);
+        } else if (param.componentType === 'geo' && param.name) {
+            console.log("省份：" + param.name + ";坐标：[" + param.event.offsetX + "," + param.event.offsetY + "]");
+        }
+    });
+
+
+</script>
+
+</html>
