@@ -75,9 +75,9 @@
         <div>
             <img src="./image/main/processed.png" style="display: block; width: 300px; height: auto; margin: 0 auto 10px;padding-top: 40px;">
             <div style="text-align: center; margin: 10px 0;">
-                <input type="text" placeholder="搜索历史人物"
-                    style="width: 500px; height: 40px; padding: 0 20px; border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-top-right-radius: 0; border-bottom-right-radius: 0; border:1px solid #d0a3a3; border-right: none; background-color: rgba(255, 255, 255, 0.9); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); font-size: 16px; color: #333; vertical-align: middle; outline: none;">
-                <button
+                <input type="text" id="searchInput" placeholder="搜索历史人物"
+                    style="width: 500px; height: 40px; padding: 0 20px; border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-top-right-radius: 0; border-bottom-right-radius: 0; border:1px solid #d0a3a3; border-right: none; background-color: rgba(255, 255, 255, 0.9); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); font-size: 16px; color: #333; vertical-align: middle; outline: none;" onkeypress="if(event.keyCode === 13) searchBaike()">
+                <button onclick="searchBaike()"
                     style="width: 100px; height: 40px; padding: 0 20px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-top-left-radius: 0; border-bottom-left-radius: 0; background-color: #d0a3a3; color: white; border: 1px solid #d0a3a3; border-left: none; font-size: 16px; cursor: pointer; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); transition: background-color 0.3s ease; vertical-align: middle; margin-left: -5px;"
                     onmouseover="this.style.backgroundColor='#c08e8e'"
                     onmouseout="this.style.backgroundColor='#d0a3a3'">搜索</button>
@@ -86,49 +86,11 @@
 
         <!-- 左侧轮播图 -->
         <div class="carousel-container" style="position: absolute; left: 150px; top: 120px;">
-            <div class="carousel" id="leftCarousel" style="position: relative; width: 100px; height: 600px; overflow: hidden;">
-                <div class="carousel-item" style="position: absolute; width: 100%; transition: transform 0.5s;">
-                    <div style="width: 100px; text-align: center; background-color: rgba(255, 255, 255, 0.9); padding: 0; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
-                        <a href="detail.html?personId=1"><img src="./image/people/xjy.png" alt="向警予" style="width: 100px; height: 125px; border-radius:8px 8px 0 0; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);"></a>
-                        <div style="color: #333; font-size: 16px; font-weight: 500; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);">向警予</div>
-                    </div>
-                </div>
-                <div class="carousel-item" style="position: absolute; width: 100%; transform: translateY(100%); transition: transform 0.5s;">
-                    <div style="width: 100px; text-align: center; background-color: rgba(255, 255, 255, 0.9); padding: 0; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
-                        <a href="detail.html?personId=2"><img src="./image/people/xjy.png" alt="蔡畅" style="width: 100px; height: 125px; border-radius:8px 8px 0 0; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);"></a>
-                        <div style="color: #333; font-size: 16px; font-weight: 500; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);">蔡畅</div>
-                    </div>
-                </div>
-                <div class="carousel-item" style="position: absolute; width: 100%; transform: translateY(200%); transition: transform 0.5s;">
-                    <div style="width: 100px; text-align: center; background-color: rgba(255, 255, 255, 0.9); padding: 0; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
-                        <a href="detail.html?personId=3"><img src="./image/people/xjy.png" alt="邓颖超" style="width: 100px; height: 125px; border-radius:8px 8px 0 0; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);"></a>
-                        <div style="color: #333; font-size: 16px; font-weight: 500; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);">邓颖超</div>
-                    </div>
-                </div>
-            </div>
+            <div class="carousel" id="leftCarousel" style="position: relative; width: 100px; height: 600px; overflow: hidden;"></div>
         </div>
         <!-- 右侧轮播图 -->
         <div class="carousel-container" style="position: absolute; right: 150px; top: 120px;">
-            <div class="carousel" id="rightCarousel" style="position: relative; width: 100px; height: 600px; overflow: hidden;">
-                <div class="carousel-item" style="position: absolute; width: 100%; transition: transform 0.5s;">
-                    <div style="width: 100px; text-align: center; background-color: rgba(255, 255, 255, 0.9); padding: 0; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
-                        <a href="detail.html?personId=4"><img src="./image/people/xjy.png" alt="何香凝" style="width: 100px; height: 125px; border-radius:8px 8px 0 0; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);"></a>
-                        <div style="color: #333; font-size: 16px; font-weight: 500; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);">何香凝</div>
-                    </div>
-                </div>
-                <div class="carousel-item" style="position: absolute; width: 100%; transform: translateY(100%); transition: transform 0.5s;">
-                    <div style="width: 100px; text-align: center; background-color: rgba(255, 255, 255, 0.9); padding: 0; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
-                        <a href="detail.html?personId=5"><img src="./image/people/xjy.png" alt="李坚真" style="width: 100px; height: 125px; border-radius:8px 8px 0 0; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);"></a>
-                        <div style="color: #333; font-size: 16px; font-weight: 500; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);">李坚真</div>
-                    </div>
-                </div>
-                <div class="carousel-item" style="position: absolute; width: 100%; transform: translateY(200%); transition: transform 0.5s;">
-                    <div style="width: 100px; text-align: center; background-color: rgba(255, 255, 255, 0.9); padding: 0; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
-                        <a href="detail.html?personId=6"><img src="./image/people/xjy.png" alt="王会悟" style="width: 100px; height: 125px; border-radius:8px 8px 0 0; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);"></a>
-                        <div style="color: #333; font-size: 16px; font-weight: 500; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);">王会悟</div>
-                    </div>
-                </div>
-            </div>
+            <div class="carousel" id="rightCarousel" style="position: relative; width: 100px; height: 600px; overflow: hidden;"></div>
         </div>
         <script>
             function startCarousel(carouselId, interval) {
@@ -168,8 +130,8 @@
             }
 
             // 启动左右两个轮播图
-            startCarousel('leftCarousel', 3000);
-            startCarousel('rightCarousel', 3000);
+            //startCarousel('leftCarousel', 3000);
+            //startCarousel('rightCarousel', 3000);
         </script>
         <div id="content-left" class="col-md-9" style="display: flex; justify-content: center; margin: 0 auto; margin-bottom: 50px;">
             <div id="main" style="width: 800px; height: 600px;"></div>
@@ -259,7 +221,7 @@
                     name: '销量',
                     type: 'scatter',
                     coordinateSystem: 'geo',//坐标系统
-                    data: dataValue,
+                    data: [],
                     //地图点的样式；颜色，大小
                     symbolSize: 12,
                     itemStyle: {
@@ -283,7 +245,7 @@
                     name: "产品销量",
                     type: "effectScatter",
                     coordinateSystem: "geo",
-                    data: dataValue,//传入的地图点数据
+                    data: [],//传入的地图点数据
                     symbolSize: 6,//涟漪大小
                     showEffectOn: "render",
                     //涟漪效应
@@ -328,11 +290,74 @@
     //点击事件
     myChart.on('click', function (param) {
         let data = param.data;
-        console.log(param);
         if (data) {
             console.log("城市：" + data.name + ";坐标：" + data.value + ";销量：" + data.sales);
         } else if (param.componentType === 'geo' && param.name) {
-            console.log("省份：" + param.name + ";坐标：[" + param.event.offsetX + "," + param.event.offsetY + "]");
+            // 获取省份相关的人物数据
+            $.ajax({
+                url: "./json/province.json",
+                type: "GET",
+                dataType: "json",
+                success: function(data) {
+                    console.log("省份：" + param.name);
+                    let provinceData;
+                    for(let i = 0; i < data.length; i++)
+                    {
+                        console.log(data[i].name);
+                        console.log(data[i].women);
+                        if(data[i].province === param.name)
+                        {
+                            provinceData = data[i].women;
+                            console.log(provinceData);
+                            console.log(provinceData[0].url);
+                            break;
+                        }
+                    }
+                    const leftCarousel = document.getElementById('leftCarousel');
+                    const rightCarousel = document.getElementById('rightCarousel');
+                    
+                    // 清空现有内容
+                    leftCarousel.innerHTML = '';
+                    rightCarousel.innerHTML = '';
+                    
+                    // 将人物数据分为左右两部分
+                    const midPoint = Math.ceil(provinceData.length / 2);
+                    const leftData = provinceData.slice(0, midPoint);
+                    const rightData = provinceData.slice(midPoint);
+                    console.log(leftData);
+                    console.log(rightData);
+                    
+                    // 渲染左侧轮播图
+                    leftData.forEach((person, index) => {
+                        const item = document.createElement('div');
+                        item.className = 'carousel-item';
+                        item.style.cssText = `position: absolute; width: 100%; transform: translateY(${index * 100}%); transition: transform 0.5s;`;
+                        item.innerHTML = `
+                            <div style="width: 100px; text-align: center; background-color: rgba(255, 255, 255, 0.9); padding: 0; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+                                <a href="detail.html?name=${person.name}"><img src="${person.url}" alt="${person.name}" style="width: 100px; height: 125px; border-radius:8px 8px 0 0; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);"></a>
+                                <div style="color: #333; font-size: 16px; font-weight: 500; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);">${person.name}</div>
+                            </div>`;
+                        leftCarousel.appendChild(item);
+                    });
+                    
+                    // 渲染右侧轮播图
+                    rightData.forEach((person, index) => {
+                        const item = document.createElement('div');
+                        item.className = 'carousel-item';
+                        item.style.cssText = `position: absolute; width: 100%; transform: translateY(${index * 100}%); transition: transform 0.5s;`;
+                        item.innerHTML = `
+                            <div style="width: 100px; text-align: center; background-color: rgba(255, 255, 255, 0.9); padding: 0; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); margin-bottom: 20px;">
+                                <a href="detail.html?name=${person.name}"><img src="${person.image}" alt="${person.name}" style="width: 100px; height: 125px; border-radius:8px 8px 0 0; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);"></a>
+                                <div style="color: #333; font-size: 16px; font-weight: 500; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);">${person.name}</div>
+                            </div>`;
+                        rightCarousel.appendChild(item);
+                    });
+                    
+                    // 重新启动轮播
+                    //if(leftData.length > 0) startCarousel('leftCarousel', 3000);
+                    //if(rightData.length > 0) startCarousel('rightCarousel', 3000);
+                }
+            });
         }
     });
 
@@ -340,3 +365,13 @@
 </script>
 
 </html>
+<script>
+function searchBaike() {
+    const searchInput = document.getElementById('searchInput');
+    const searchText = searchInput.value.trim();
+    if (searchText) {
+        window.open('https://baike.baidu.com/item/' + encodeURIComponent(searchText), '_blank');
+        searchInput.value = '';
+    }
+}
+</script>

@@ -142,20 +142,20 @@
 <body>
     <div class="container">
         <div class="sidebar">
-            <h2>详细史料</h2>
             <div id="sidebar-content"></div>
         </div>
         <div class="main-content">
             <div class="left-content">
                 <h1 id="person-name"></h1>
+                <div class="profile-img"><img id="person-image" src="" alt="人物照片"></div>
                 <div class="profile-info" id="main-content"></div>
             </div>
-            <div class="right-content">
+            <!-- <div class="right-content">
                 <div class="profile">
                     <div class="profile-img"><img id="person-image" src="" alt="人物照片"></div>
                 </div>
                 <div class="birth-info" id="attribute-info"></div>
-            </div>
+            </div> -->
         </div>
     </div>
 
@@ -222,14 +222,14 @@
             }
 
             // 显示属性信息
-            const attributeInfo = document.getElementById('attribute-info');
-            for (const [key, value] of Object.entries(person.attribute)) {
-                const p = document.createElement('p');
-                p.style.marginBottom = '8px';
-                p.style.color = '#444';
-                p.innerHTML = `<strong>${key}：</strong>${value}`;
-                attributeInfo.appendChild(p);
-            }
+            // const attributeInfo = document.getElementById('attribute-info');
+            // for (const [key, value] of Object.entries(person.attribute)) {
+            //     const p = document.createElement('p');
+            //     p.style.marginBottom = '8px';
+            //     p.style.color = '#444';
+            //     p.innerHTML = `<strong>${key}：</strong>${value}`;
+            //     attributeInfo.appendChild(p);
+            // }
         }
 
         // 页面加载完成后执行

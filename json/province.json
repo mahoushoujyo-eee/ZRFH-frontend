@@ -1,28 +1,22 @@
 [
     {
-        "province":"广东省",
+        "province":"广东",
         "women":
         [
             {
                 "name":"高恬波",
-                "url":"../image/people/gtb.png" 
-            },
-            {
-                
+                "url":"./image/people/gtb.png" 
             }
         ]
     
     },
     {
-        "province":"湖南省",
+        "province":"湖南",
         "women":
         [
             {
                 "name":"向警予",
-                "url":"../image/people/xjy.png"
-            },
-            {
-                
+                "url":"./image/people/xjy.png"
             }
         ]
     }

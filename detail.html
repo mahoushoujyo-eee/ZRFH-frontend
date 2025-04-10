@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="./image/main/tag.png">
-    <title>向警予</title>
+    <title>人物详情</title>
     <style>
         * {
             margin: 0;
@@ -12,208 +13,729 @@
             box-sizing: border-box;
             font-family: "Microsoft YaHei", Arial, sans-serif;
         }
-        
+
         body {
             background: linear-gradient(180deg, #8B0000 0%, #A52A2A 100%);
             padding: 20px;
         }
-        
+
         .container {
             display: flex;
             max-width: 1200px;
             margin: 0 auto;
         }
-        
-        .main-content {
-            display: flex;
-            flex: 2;
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin-right: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
-        .left-content {
-            flex: 3;
-            padding-right: 20px;
-        }
-        
-        .right-content {
-            flex: 2;
-            padding-left: 20px;
-            border-left: 1px solid #eee;
-        }
-        
+
         .sidebar {
             flex: 0.8;
             background-color: #ffc0cb;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             margin-right: 20px;
+            position: sticky;
+            top: 20px;
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
         }
-        
+
+        .main-content {
+            flex: 3;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
         h1 {
             color: #333;
             margin-bottom: 20px;
             border-bottom: 1px solid #eee;
             padding-bottom: 10px;
         }
-        
+
         h2 {
             color: #555;
             margin: 15px 0 10px;
             padding-bottom: 5px;
             border-bottom: 1px solid #eee;
         }
-        
+
+        h3 {
+            color: #666;
+            margin: 12px 0 8px;
+        }
+
         p {
             line-height: 1.6;
             margin-bottom: 10px;
             color: #444;
+            white-space: pre-line;
         }
-        
+
         .profile {
             display: flex;
             margin: 20px 0;
-            justify-content: center;
+            align-items: center;
         }
-        
+
         .profile-img {
             width: 150px;
             height: 180px;
             margin-right: 20px;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
-        
+
         .profile-img img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-        
-        .profile-info {
-            flex: 1;
-        }
-        
-        .profile-info p {
-            margin-bottom: 5px;
-        }
-        
+
         .sidebar h3 {
             margin: 15px 0 10px;
             color: #333;
         }
-        
-        .sidebar ul {
+
+        .sidebar-menu {
             list-style-type: none;
         }
-        
-        .sidebar li {
-            margin-bottom: 5px;
+
+        .sidebar-menu li {
+            margin-bottom: 8px;
             position: relative;
             padding-left: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
         }
-        
-        .sidebar li:before {
+
+        .sidebar-menu li:before {
             content: "•";
             position: absolute;
             left: 0;
             color: #333;
         }
-        
-        .sidebar a {
-            color: #444;
-            text-decoration: none;
+
+        .sidebar-menu li:hover {
+            color: #8B0000;
+            font-weight: bold;
         }
-        
-        .sidebar .section {
-            margin-bottom: 20px;
+
+        .sidebar-menu li.active {
+            color: #8B0000;
+            font-weight: bold;
         }
-        
-        .birth-info {
-            margin-top: 10px;
+
+        .sidebar-submenu {
+            list-style-type: none;
+            margin-left: 15px;
+            display: none;
+        }
+
+        .sidebar-submenu li {
+            margin-bottom: 5px;
+            padding-left: 15px;
+        }
+
+        .sidebar-menu li.expanded .sidebar-submenu {
+            display: block;
+        }
+
+        .content-section {
+            margin-bottom: 30px;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .section-heading h2 {
+            margin: 0;
+            border-bottom: none;
+        }
+
+        .section-content {
+            padding-left: 10px;
+            border-left: 3px solid #8B0000;
+        }
+
+        .subsection {
+            margin: 15px 0;
             padding: 10px;
             background-color: #f9f9f9;
             border-radius: 5px;
         }
+
+        /* 博物馆推荐部分的样式 */
+        .museum-recommendation {
+            margin-top: 40px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+
+        .museum-button {
+            background-color: #8B0000;
+            color: white;
+            padding: 12px 20px;
+            border: 1px solid white;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto 20px;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+        .museum-button:hover {
+            background-color: #A52A2A;
+        }
+
+        .museum-icons {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 20px;
+        }
+
+        .museum-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .icon-img {
+            width: 32px;
+            height: 32px;
+            margin-bottom: 8px;
+        }
+
+        .recommendation-result {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .recommendation-loading {
+            text-align: center;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .dot-typing {
+            position: relative;
+            left: -9999px;
+            width: 10px;
+            height: 10px;
+            border-radius: 5px;
+            background-color: #8B0000;
+            color: #8B0000;
+            box-shadow: 9984px 0 0 0 #8B0000, 9999px 0 0 0 #8B0000, 10014px 0 0 0 #8B0000;
+            animation: dot-typing 1.5s infinite linear;
+            margin: 0 auto;
+        }
+
+        @keyframes dot-typing {
+            0% {
+                box-shadow: 9984px 0 0 0 #8B0000, 9999px 0 0 0 #8B0000, 10014px 0 0 0 #8B0000;
+            }
+
+            16.667% {
+                box-shadow: 9984px -10px 0 0 #8B0000, 9999px 0 0 0 #8B0000, 10014px 0 0 0 #8B0000;
+            }
+
+            33.333% {
+                box-shadow: 9984px 0 0 0 #8B0000, 9999px 0 0 0 #8B0000, 10014px 0 0 0 #8B0000;
+            }
+
+            50% {
+                box-shadow: 9984px 0 0 0 #8B0000, 9999px -10px 0 0 #8B0000, 10014px 0 0 0 #8B0000;
+            }
+
+            66.667% {
+                box-shadow: 9984px 0 0 0 #8B0000, 9999px 0 0 0 #8B0000, 10014px 0 0 0 #8B0000;
+            }
+
+            83.333% {
+                box-shadow: 9984px 0 0 0 #8B0000, 9999px 0 0 0 #8B0000, 10014px -10px 0 0 #8B0000;
+            }
+
+            100% {
+                box-shadow: 9984px 0 0 0 #8B0000, 9999px 0 0 0 #8B0000, 10014px 0 0 0 #8B0000;
+            }
+        }
+
+        .museum-info {
+            margin-top: 15px;
+        }
+
+        .museum-name {
+            font-weight: bold;
+            color: #8B0000;
+            margin-bottom: 8px;
+        }
+
+        .museum-address,
+        .museum-description {
+            margin-bottom: 5px;
+        }
+
+
+        /* 添加在现有style标签内的末尾 */
+
+        /* 汉堡菜单按钮 */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            background-color: #8B0000;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 5px 0;
+            transition: all 0.3s;
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                position: fixed;
+                left: -100%;
+                top: 0;
+                width: 80%;
+                height: 100%;
+                z-index: 999;
+                margin-right: 0;
+                transition: left 0.3s ease;
+                overflow-y: scroll;
+            }
+
+            .sidebar.active {
+                left: 0;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .menu-toggle.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .menu-toggle.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(5px, -5px);
+            }
+
+            .main-content {
+                padding-top: 60px;
+            }
+
+            .profile {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .profile-img {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+
+            /* 菜单打开时添加遮罩层 */
+            .overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 998;
+            }
+
+            .overlay.active {
+                display: block;
+            }
+        }
     </style>
 </head>
+
 <body>
     <div class="container">
+        <button class="menu-toggle" id="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
         <div class="sidebar">
-            <h2>详细史料</h2>
-            <div class="section">
-                <h3>1.人物生平</h3>
-                <ul>
-                    <li><a href="#">· 觉悟成长</a></li>
-                    <li><a href="#">· 革命先驱</a></li>
-                    <li><a href="#">· 旅欧之部</a></li>
-                    <li><a href="#">· 妇女运动先驱</a></li>
-                    <li><a href="#">· 英烈不朽</a></li>
-                </ul>
-            </div>
-            <div class="section">
-                <h3>2.主要成就</h3>
-            </div>
-            <div class="section">
-                <h3>3.轶事典故</h3>
-                <ul>
-                    <li><a href="#">· 女国民会</a></li>
-                    <li><a href="#">· 向蔡同盟</a></li>
-                </ul>
-            </div>
-            <div class="section">
-                <h3>4.家庭成员</h3>
-            </div>
-            <div class="section">
-                <h3>5.个人作品</h3>
-            </div>
-            <div class="section">
-                <h3>6.后世纪念</h3>
-            </div>
-            <div class="section">
-                <h3>7.人物评价</h3>
-            </div>
-            <div class="section">
-                <h3>8.影视形象</h3>
-            </div>
-            <div class="section">
-                <h3>9.博物馆导览</h3>
-            </div>
+            <h2>目录</h2>
+            <ul class="sidebar-menu" id="sidebar-menu"></ul>
         </div>
         <div class="main-content">
-            <div class="left-content">
-                <h1>向警予</h1>
-                <div class="profile-info">
-                    <p>中国共产党早期重要领导人、妇女运动先驱展开6个同名词条</p>
-                    <p>向警予（1895年9月4日—1928年5月1日），女，原名向俊贤，生于湖南溆浦县，土家族。中国共产党创始人及早期领导人之一，杰出的共产主义战士，忠诚的无产阶级革命家，中国妇女运动的先驱和领袖。1928年3月20日，由于叛徒的出卖，向警予在汉口法租界三德里被捕，同年5月1日，向警予在余记里刑场英勇就义，年仅33岁。</p>
-                    <p>向警予先后出席了党的"二大"至"五大"，当选为党的"二大"、"三大"、"四大"中央委员，并连续担任中央妇女部部长。1925年5月增补为中央局委员。她是中国共产党第一个女中央委员、女中央局委员、党中央妇女部第一任部长、参加中共三大会议唯一的女代表。1936年毛泽东评价她是中国共产党"唯的一个女founder"。</p>
-                    <p>2009年，向警予被评为100位为新中国成立作出贡献的英雄模范人物之一。</p>
-                </div>
-                <h2>人物生平</h2>
-                <h3>觉悟成长</h3>
-                <p>向警予，原名向俊贤，1895年生于湖南溆浦县商会会长之家。她排行老九，有几个兄长曾留学日本，自幼受其影响追求新知识，6岁入私塾。1903年，八岁时，向警予成为全县第一个入学校的女学生，进入长兄在县城开设的新式小学。她在校品学兼优。15岁在常德读书时，丁玲的母亲余曼贞与她同级，关系至为亲密，受她影响很大。</p>
-                <p>1911年，辛亥革命推翻了清王朝的统治，向俊贤由湘西到长沙，先后在湖南省立第一女子师范学校、周南女校读书，改名向警予，表示对封建势力的高度警惕和反抗。在上学期间，她关心国事，当丧权辱国的"二十一条"签定后，她和长沙的同学们一起走上街头演讲，唤起同胞们救国救民的热情。周南女校被人称为"女革命家的摇篮"，向警予在这里因与蔡畅的同学关系而结识蔡和森、毛泽东。</p>
+            <h1 id="person-name"></h1>
+            <div class="profile">
+                <div class="profile-img"><img id="person-image" src="./image/placeholder.jpg" alt="人物照片"></div>
+                <div id="person-subtitle"></div>
             </div>
-            <div class="right-content">
-                <div class="profile">
-                    <div class="profile-img"><img src="./image/people/xjy.png"></div>
+            <div id="main-content"></div>
+
+            <!-- 新增博物馆推荐部分 -->
+            <div class="museum-recommendation">
+                <h2>相关博物馆</h2>
+                <button id="museum-button" class="museum-button">AI推荐博物馆</button>
+
+                <!-- <div class="museum-icons">
+                    <div class="museum-icon">
+                        <span>预约购票</span>
+                    </div>
+                    <div class="museum-icon">
+                        <span>参观信息</span>
+                    </div>
+                    <div class="museum-icon">
+                        <span>讲解服务</span>
+                    </div>
+                </div> -->
+
+                <div id="recommendation-loading" class="recommendation-loading">
+                    <p>AI智能推荐博物馆中</p>
+                    <div class="dot-typing"></div>
                 </div>
-                <div class="birth-info" style="margin-top: 20px; padding: 15px; background-color: #f9f9f9; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                    <p style="margin-bottom: 8px; color: #444;"><strong>中文名：</strong>向警予</p>
-                    <p style="margin-bottom: 8px; color: #444;"><strong>别名：</strong>向俊贤</p>
-                    <p style="margin-bottom: 8px; color: #444;"><strong>性别：</strong>女</p>
-                    <p style="margin-bottom: 8px; color: #444;"><strong>国籍：</strong>中国</p>
-                    <p style="margin-bottom: 8px; color: #444;"><strong>民族：</strong>土家族</p>
-                    <p style="margin-bottom: 8px; color: #444;"><strong>出生地：</strong>湖南省溆浦县</p>
-                    <p style="margin-bottom: 8px; color: #444;"><strong>出生日期：</strong>1895年9月4日</p>
-                    <p style="margin-bottom: 8px; color: #444;"><strong>逝世日期：</strong>1928年5月1日</p>
-                    <p style="margin-bottom: 8px; color: #444;"><strong>毕业院校：</strong>蒙达尼女子公学、苏联莫斯科大学</p>
-                    <p style="margin-bottom: 8px; color: #444;"><strong>主要成就：</strong>100位为新中国成立作出突出贡献的英雄模范人物之一</p>
+
+                <div id="recommendation-result" class="recommendation-result">
+                    <!-- 此处将通过JS动态生成推荐结果 -->
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        // 从URL获取人物名称参数
+        function getPersonNameFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('name') || '向警予'; // 默认显示向警予的信息
+        }
+
+        // 加载JSON数据
+        async function loadPersonData() {
+            try {
+                const response = await fetch('./json/new_details.json');
+                const data = await response.json();
+                const personName = getPersonNameFromUrl();
+                const person = data.find(p => p.name === personName);
+
+                if (person && person.data) {
+                    displayPersonData(person);
+                    setupMuseumRecommendation(person.name); // 设置博物馆推荐功能
+                } else {
+                    console.error('未找到指定人物数据');
+                }
+            } catch (error) {
+                console.error('加载数据失败:', error);
+            }
+        }
+
+        // 显示人物数据
+        function displayPersonData(person) {
+            // 设置标题
+            document.title = person.name + " - 人物详情";
+            document.getElementById('person-name').textContent = person.name;
+            // 设置人物头像
+            document.getElementById('person-image').src = person.img;
+
+            // 处理侧边栏和主内容
+            const sidebarMenu = document.getElementById('sidebar-menu');
+            const mainContent = document.getElementById('main-content');
+
+            // 清空内容
+            sidebarMenu.innerHTML = '';
+            mainContent.innerHTML = '';
+
+            // 遍历数据对象
+            Object.entries(person.data).forEach(([key, section]) => {
+                // 创建侧边栏菜单项
+                const menuItem = document.createElement('li');
+                menuItem.textContent = section.title;
+                menuItem.dataset.section = key;
+                menuItem.addEventListener('click', () => scrollToSection(key));
+
+                // 判断是否有子部分
+                if (section.subsections) {
+                    const subMenu = document.createElement('ul');
+                    subMenu.className = 'sidebar-submenu';
+
+                    Object.entries(section.subsections).forEach(([subKey, subSection]) => {
+                        const subMenuItem = document.createElement('li');
+                        subMenuItem.textContent = subSection.title;
+                        subMenuItem.dataset.section = `${key}-${subKey}`;
+                        subMenuItem.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            scrollToSection(`${key}-${subKey}`);
+                        });
+                        subMenu.appendChild(subMenuItem);
+                    });
+
+                    menuItem.appendChild(subMenu);
+                    menuItem.addEventListener('click', (e) => {
+                        menuItem.classList.toggle('expanded');
+                    });
+                }
+
+                sidebarMenu.appendChild(menuItem);
+
+                // 创建主内容区域
+                const contentSection = document.createElement('div');
+                contentSection.className = 'content-section';
+                contentSection.id = `section-${key}`;
+
+                const sectionHeading = document.createElement('div');
+                sectionHeading.className = 'section-heading';
+
+                const sectionTitle = document.createElement('h2');
+                sectionTitle.textContent = section.title;
+                sectionHeading.appendChild(sectionTitle);
+                contentSection.appendChild(sectionHeading);
+
+                // 如果有副标题
+                if (section.subtitle) {
+                    const subtitle = document.createElement('p');
+                    subtitle.innerHTML = `<strong>${section.subtitle}</strong>`;
+                    contentSection.appendChild(subtitle);
+
+                    // 如果是第一个部分，把副标题也放到人物头像旁边
+                    if (key === '1') {
+                        document.getElementById('person-subtitle').innerHTML = `<h3>${section.subtitle}</h3>`;
+                    }
+                }
+
+                // 如果有介绍
+                if (section.introduction) {
+                    const intro = document.createElement('p');
+                    intro.textContent = section.introduction;
+                    contentSection.appendChild(intro);
+                }
+
+                // 如果有内容
+                if (section.content) {
+                    const content = document.createElement('div');
+                    content.className = 'section-content';
+                    content.innerHTML = `<p>${section.content}</p>`;
+                    contentSection.appendChild(content);
+                }
+
+                // 如果有子部分
+                if (section.subsections) {
+                    Object.entries(section.subsections).forEach(([subKey, subSection]) => {
+                        const subsection = document.createElement('div');
+                        subsection.className = 'subsection';
+                        subsection.id = `section-${key}-${subKey}`;
+
+                        const subTitle = document.createElement('h3');
+                        subTitle.textContent = subSection.title;
+                        subsection.appendChild(subTitle);
+
+                        if (subSection.content) {
+                            const subContent = document.createElement('p');
+                            subContent.textContent = subSection.content;
+                            subsection.appendChild(subContent);
+                        }
+
+                        contentSection.appendChild(subsection);
+                    });
+                }
+
+                mainContent.appendChild(contentSection);
+            });
+
+            // 默认展开第一个菜单项
+            if (sidebarMenu.firstChild) {
+                sidebarMenu.firstChild.classList.add('active');
+                if (sidebarMenu.firstChild.querySelector('.sidebar-submenu')) {
+                    sidebarMenu.firstChild.classList.add('expanded');
+                }
+            }
+        }
+
+        // 滚动到指定部分
+        function scrollToSection(sectionId) {
+            let sectionElement;
+
+            if (sectionId.includes('-')) {
+                // 子部分
+                const [mainId, subId] = sectionId.split('-');
+                sectionElement = document.getElementById(`section-${mainId}-${subId}`);
+            } else {
+                // 主部分
+                sectionElement = document.getElementById(`section-${sectionId}`);
+            }
+
+            if (sectionElement) {
+                // 移除所有active类
+                document.querySelectorAll('.sidebar-menu li').forEach(item => {
+                    item.classList.remove('active');
+                });
+
+                // 给当前点击的菜单项添加active类
+                const menuItem = document.querySelector(`[data-section="${sectionId}"]`);
+                if (menuItem) {
+                    menuItem.classList.add('active');
+
+                    // 如果是子菜单项，也要展开其父菜单
+                    const parentItem = menuItem.closest('.sidebar-menu > li');
+                    if (parentItem && parentItem !== menuItem) {
+                        parentItem.classList.add('expanded');
+                    }
+                }
+
+                sectionElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // 设置博物馆推荐功能
+        function setupMuseumRecommendation(personName) {
+            const button = document.getElementById('museum-button');
+            const loading = document.getElementById('recommendation-loading');
+            const result = document.getElementById('recommendation-result');
+
+            // 预设博物馆数据 - 可以根据不同人物设置不同的推荐博物馆
+            const museumData = {
+                '向警予': {
+                    name: '中国妇女儿童博物馆',
+                    address: '北京市东城区东四十二条48号',
+                    description: '中国妇女儿童博物馆收藏并展示了向警予等革命女性的重要文物与资料，详细记录了她们为中国妇女解放事业做出的杰出贡献。',
+                    reason: '作为中国共产党早期重要的女性领导人，向警予领导了中国妇女运动，在此博物馆可以全面了解她的革命历程与思想。'
+                },
+                '邓颖超': {
+                    name: '周恩来邓颖超纪念馆',
+                    address: '天津市南开区水上公园北路1号',
+                    description: '周恩来邓颖超纪念馆详细展示了邓颖超和周恩来的革命历程和人生经历，收藏了大量珍贵的历史文物和资料。',
+                    reason: '作为杰出的革命家和中国妇女运动的先驱，邓颖超的一生充满传奇，在此可以深入了解她的革命历程和个人魅力。'
+                },
+                // 可以为其他人物添加预设博物馆
+                '默认': {
+                    name: '中国国家博物馆',
+                    address: '北京市东城区天安门广场东侧',
+                    description: '作为中国历史和文化的重要展示场所，国家博物馆收藏了大量与中国革命历史相关的珍贵文物。',
+                    reason: '在这里可以系统了解中国近现代革命历史，找到与该历史人物相关的历史背景和事件脉络。'
+                }
+            };
+
+            // 点击推荐按钮
+            button.addEventListener('click', () => {
+                // 显示加载动画
+                loading.style.display = 'block';
+                result.style.display = 'none';
+
+                // 模拟AI思考过程，3秒后显示结果
+                setTimeout(() => {
+                    loading.style.display = 'none';
+                    result.style.display = 'block';
+
+                    // 获取对应人物的博物馆数据，如果没有则使用默认数据
+                    const museum = museumData[personName] || museumData['默认'];
+
+                    // 填充推荐结果
+                    result.innerHTML = `
+                        <h3>推荐参观</h3>
+                        <div class="museum-info">
+                            <p class="museum-name">${museum.name}</p>
+                            <p class="museum-address"><strong>地址：</strong>${museum.address}</p>
+                            <p class="museum-description">${museum.description}</p>
+                            <p><strong>推荐理由：</strong>${museum.reason}</p>
+                        </div>
+                    `;
+
+                    // 滚动到推荐结果
+                    result.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 3000);
+            });
+        }
+
+        function setupMobileMenu() {
+            const menuToggle = document.getElementById('menu-toggle');
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.getElementById('overlay');
+
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+                menuToggle.classList.toggle('active');
+                overlay.classList.toggle('active');
+                document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
+            });
+
+            // 点击遮罩层关闭菜单
+            overlay.addEventListener('click', () => {
+                sidebar.classList.remove('active');
+                menuToggle.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+
+            // 点击侧边栏内的链接也关闭菜单（在移动端）
+            document.querySelectorAll('.sidebar-menu li').forEach(item => {
+                item.addEventListener('click', () => {
+                    if (window.innerWidth <= 768) {
+                        setTimeout(() => {
+                            sidebar.classList.remove('active');
+                            menuToggle.classList.remove('active');
+                            overlay.classList.remove('active');
+                            document.body.style.overflow = '';
+                        }, 300); // 给一点延迟，让用户看到点击效果
+                    }
+                });
+            });
+        }
+
+        // 页面加载完成后执行
+        window.addEventListener('load', () => {
+            loadPersonData();
+            setupMobileMenu();
+        });
+
+        // 监听窗口大小变化，处理菜单状态
+        window.addEventListener('resize', () => {
+            const sidebar = document.querySelector('.sidebar');
+            const menuToggle = document.getElementById('menu-toggle');
+            const overlay = document.getElementById('overlay');
+
+            if (window.innerWidth > 768) {
+                sidebar.classList.remove('active');
+                menuToggle.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // 页面加载完成后执行
+        window.addEventListener('load', loadPersonData);
+    </script>
 </body>
+
 </html>
